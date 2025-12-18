@@ -1,13 +1,41 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.SceneManagement;
+using TMPro; // solo si usás TextMeshPro
 
 public class GameManager : MonoBehaviour
 {
-    public static int puntos = 0;
+    public static GameManager Instance;
+
+    public int score = 0;
+    public TextMeshProUGUI scoreText;
+
+    void Awake()
+    {
+        Instance = this;
+        UpdateUI();
+    }
 
     void Update()
     {
-        Debug.Log("Puntos: " + puntos);
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            RestartScene();
+        }
+    }
+
+    public void AddPoint()
+    {
+        score++;
+        UpdateUI();
+    }
+
+    void UpdateUI()
+    {
+        scoreText.text = "Puntaje: " + score;
+    }
+
+    void RestartScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
